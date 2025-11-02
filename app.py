@@ -44,7 +44,8 @@ def public():
 # -----------------------
 @app.route("/login", methods=["GET", "POST"])
 def login():
-    if request.method == "POST":
+    form = CSRFForm()
+    if form.validate_on_submit():
         username = request.form.get("username", "")
         password = request.form.get("password", "")
 
@@ -62,7 +63,7 @@ def login():
         else:
             flash("Login gagal", "danger")
 
-    return render_template("login.html")
+    return render_template("login.html", form=form)
 
 @app.route("/logout")
 def logout():
@@ -99,7 +100,8 @@ def dashboard():
 def profile():
     db = get_db()
     user_id = session["user_id"]
-    if request.method == "POST":
+    form = CSRFForm()
+    if form.validate_on_submit():
         # allow user to post a comment (stored, no sanitization -> XSS)
         comment = request.form.get("comment", "")
         db.execute("INSERT INTO comments (user_id, comment) VALUES (?, ?)", (user_id, comment))
@@ -109,7 +111,7 @@ def profile():
 
     user = db.execute("SELECT * FROM users WHERE id = ?", (user_id,)).fetchone()
     comments = db.execute("SELECT c.*, u.username FROM comments c JOIN users u ON c.user_id = u.id ORDER BY c.id DESC").fetchall()
-    return render_template("profile.html", user=user, comments=comments)
+    return render_template("profile.html", user=user, comments=comments ,form=form)
 
 # -----------------------
 # TRANSFER
