@@ -11,7 +11,7 @@
 - pip
 
 ## Cara Menjalankan
-1. Buat dan aktifin Virtual Environment (rekomend)
+1. Buat dan aktifin Virtual Environment (Optional tapi rekomendasi untuk dilakukan)
 
 ```cmd
 python -m venv venv
@@ -33,7 +33,7 @@ flask run
 4. Buka `http://127.0.0.1:5000` di browser anda
 
 
-## Akun Contoh
+## Akun Dummy
 - Username: `alice` | Password: `password123` | Role: `user`
 - Username: `bob` | Password: `mypassword` | Role: `user`
 - Username: `admin` | Password: `adminpass` | Role: `admin`
