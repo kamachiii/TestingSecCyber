@@ -11,26 +11,19 @@
 - pip
 
 ## Cara Menjalankan
-1. Buat dan aktifin Virtual Environment (Optional tapi rekomendasi untuk dilakukan)
-
-```cmd
-python -m venv venv
-source venv/bin/activate
-```
-
-2. Install dependencies dari requirements.txt
+1. Install dependencies dari requirements.txt
 
 ```cmd
 pip install -r requirements.txt
 ```
 
-3. Jalankan aplikasi
+2. Jalankan aplikasi
 
 ```cmd
 flask run
 ```
 
-4. Buka `http://127.0.0.1:5000` di browser anda
+3. Buka `http://127.0.0.1:5000` di browser anda
 
 
 ## Akun Dummy
