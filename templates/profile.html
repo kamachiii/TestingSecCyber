@@ -9,7 +9,7 @@
 <h3>Komentar (terbaru)</h3>
 <ul>
   {% for c in comments %}
-    <li><strong>{{ c.username }}:</strong> {{ c.comment | safe }}</li>
+    <li><strong>{{ c.username }}:</strong> {{ c.comment }}</li>
   {% endfor %}
 </ul>
 {% endblock %}

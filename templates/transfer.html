@@ -4,6 +4,7 @@
 <p>Saldo Anda: {{ account.balance }}</p>
 
 <form method="post">
+  {{ form.hidden_tag() }}
   <label>Ke username: <input name="to_user"></label><br><br>
   <label>Jumlah: <input name="amount" type="number" value="0"></label><br><br>
   <button type="submit">Kirim</button>

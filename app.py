@@ -2,9 +2,12 @@ from flask import Flask, render_template, request, redirect, url_for, session, g
 import sqlite3
 import os
 import urllib.parse
+from flask_wtf import FlaskForm, CSRFProtect
 
 app = Flask(__name__)
 app.secret_key = "dev-secret-key-please-change"  # untuk lab saja
+app.config["WTF_CSRF_SECRET_KEY"] = app.secret_key
+csrf = CSRFProtect(app)
 
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 DATABASE = os.path.join(BASE_DIR, "app.db")
@@ -22,8 +25,11 @@ def close_connection(exc):
     if db is not None:
         db.close()
 
+class CSRFForm(FlaskForm):
+    pass
+
 # -----------------------
-# PUBLIC PAGES 
+# PUBLIC PAGES
 # -----------------------
 @app.route("/")
 def index():
@@ -34,7 +40,7 @@ def public():
     return render_template("public.html")
 
 # -----------------------
-# AUTH 
+# AUTH
 # -----------------------
 @app.route("/login", methods=["GET", "POST"])
 def login():
@@ -43,8 +49,8 @@ def login():
         password = request.form.get("password", "")
 
         db = get_db()
-        query = f"SELECT * FROM users WHERE username = '{username}' AND password = '{password}'"
-        cur = db.execute(query)
+        query = f"SELECT * FROM users WHERE username = ? AND password = ?"
+        cur = db.execute(query, (username, password))
         user = cur.fetchone()
 
         if user:
@@ -106,7 +112,7 @@ def profile():
     return render_template("profile.html", user=user, comments=comments)
 
 # -----------------------
-# TRANSFER 
+# TRANSFER
 # -----------------------
 @app.route("/transfer", methods=["GET", "POST"])
 @login_required
@@ -115,7 +121,9 @@ def transfer():
     user_id = session["user_id"]
     account = db.execute("SELECT * FROM accounts WHERE user_id = ?", (user_id,)).fetchone()
 
-    if request.method == "POST":
+    form = CSRFForm()
+
+    if form.validate_on_submit():
         to_user = request.form.get("to_user")
         amount = int(request.form.get("amount", "0"))
         # simple transfer logic (no transaction safety for simplicity)
@@ -140,7 +148,7 @@ def transfer():
         flash(f"Transfer {amount} ke {to_user} berhasil", "success")
         return redirect(url_for("dashboard"))
 
-    return render_template("transfer.html", account=account)
+    return render_template("transfer.html", account=account, form=form)
 
 # -----------------------
 # ADMIN (demonstrate route protected)
