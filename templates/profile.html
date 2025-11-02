@@ -2,6 +2,7 @@
 {% block content %}
 <h2>Profile: {{ user.fullname }}</h2>
 <form method="post">
+  {{ form.hidden_tag() }}
   <textarea name="comment" rows="3" cols="50" placeholder="Tulis komentar..."></textarea><br>
   <button type="submit">Kirim Komentar</button>
 </form>
