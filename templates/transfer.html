@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Transfer</h2>
+<p>Saldo Anda: {{ account.balance }}</p>
+
+<form method="post">
+  <label>Ke username: <input name="to_user"></label><br><br>
+  <label>Jumlah: <input name="amount" type="number" value="0"></label><br><br>
+  <button type="submit">Kirim</button>
+</form>
+
+<p><em>Operasi transfer akan memproses pengurangan dan penambahan saldo sesuai input.</em></p>
+{% endblock %}

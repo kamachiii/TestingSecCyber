@@ -1,0 +1,44 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>VulnLab - {{ title if title else 'Keamanan Web' }}</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; max-width: 900px; }
+        nav a { margin-right: 10px; }
+        .flash { padding: 8px; margin: 8px 0; border-radius: 4px; }
+        .flash.success { background: #e0ffe0; }
+        .flash.danger { background: #ffe0e0; }
+    </style>
+</head>
+<body>
+<nav>
+    <a href="{{ url_for('index') }}">Home</a>
+    <a href="{{ url_for('public') }}">Public</a>
+    {% if session.get('user_id') %}
+        <a href="{{ url_for('dashboard') }}">Dashboard</a>
+        <a href="{{ url_for('profile') }}">Profile</a>
+        <a href="{{ url_for('transfer') }}">Transfer</a>
+        {% if session.get('role') == 'admin' %}
+            <a href="{{ url_for('admin') }}">Admin</a>
+        {% endif %}
+        <a href="{{ url_for('logout') }}">Logout</a>
+    {% else %}
+        <a href="{{ url_for('login') }}">Login</a>
+    {% endif %}
+</nav>
+<hr>
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    {% for cat, msg in messages %}
+      <div class="flash {{ cat }}">{{ msg }}</div>
+    {% endfor %}
+  {% endif %}
+{% endwith %}
+
+{% block content %}{% endblock %}
+
+<hr>
+<small>Vulnerable training app — untuk tujuan pembelajaran.</small>
+</body>
+</html>

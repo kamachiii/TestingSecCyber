@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Dashboard</h2>
+<p>Selamat datang, {{ user.fullname }} ({{ user.username }})</p>
+<p>Saldo: <strong>{{ account.balance }}</strong></p>
+
+<h3>Komentar</h3>
+<ul>
+{% for c in comments %}
+  <li><strong>{{ c.username }}:</strong>
+    {{ c.comment | safe }}
+  </li>
+{% else %}
+  <li>Tidak ada komentar</li>
+{% endfor %}
+</ul>
+{% endblock %}

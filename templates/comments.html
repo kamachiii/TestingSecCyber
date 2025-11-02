@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Debug DB</h2>
+<h3>Users</h3>
+<ul>
+{% for u in users %}
+  <li>{{ u.username }} ({{ u.role }})</li>
+{% endfor %}
+</ul>
+<h3>Accounts</h3>
+<ul>
+{% for a in accounts %}
+  <li>user_id {{ a.user_id }} -> {{ a.balance }}</li>
+{% endfor %}
+</ul>
+<h3>Comments</h3>
+<ul>
+{% for c in comments %}
+  <li>{{ c.user_id }}: {{ c.comment }}</li>
+{% endfor %}
+</ul>
+{% endblock %}

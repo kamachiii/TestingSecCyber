@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Profile: {{ user.fullname }}</h2>
+<form method="post">
+  <textarea name="comment" rows="3" cols="50" placeholder="Tulis komentar..."></textarea><br>
+  <button type="submit">Kirim Komentar</button>
+</form>
+
+<h3>Komentar (terbaru)</h3>
+<ul>
+  {% for c in comments %}
+    <li><strong>{{ c.username }}:</strong> {{ c.comment | safe }}</li>
+  {% endfor %}
+</ul>
+{% endblock %}
